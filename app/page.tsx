@@ -1,69 +1,139 @@
+"use client";
 import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import Scene from "@/components/Scene";
+import { About } from "@/components/About";
+import Skills from "@/components/Skills";
+import Experience from "@/components/Experience";
+import Education from "@/components/Education";
+import Highlight from "@/components/Highlight";
+import Contact from "@/components/Contact";
+import TechMarquee from "@/components/TechMarquee";
+import ScrollProgress from "@/components/ScrollProgress";
+
+const navLinks = [
+  { href: "#about", label: "About" },
+  { href: "#skills", label: "Skills" },
+  { href: "#experience", label: "Experience" },
+  { href: "#education", label: "Education" },
+  { href: "#contact", label: "Contact" },
+];
+
+const heroStats = [
+  { strong: "1+", span: "Years Working" },
+  { strong: "3+", span: "Projects Built" },
+  { strong: "100%", span: "Commitment" },
+];
 
 export default function Home() {
+  // Global scroll progress — no target ref, so the framer-motion
+  // "Target ref is defined but not hydrated" error can never occur.
+  const { scrollYProgress } = useScroll();
+  const portraitY = useTransform(scrollYProgress, [0, 0.2], [80, -80]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="max-w-[1160px] mx-auto px-6 w-full">
+      {/* Navbar */}
+      <nav className="sticky top-0 h-[76px] flex items-center justify-between bg-background/90 backdrop-blur-md border-b border-black/10 dark:border-white/10 z-50">
+        <ScrollProgress />
+        <a href="#hero" className="font-grotesk text-2xl font-bold">
+          CE<span className="text-accent-dark">.</span>
+        </a>
+        <div className="hidden md:flex gap-8 text-sm font-semibold text-muted">
+          {navLinks.map((link) => (
+            <a key={link.href} href={link.href} className="hover:text-accent-dark">
+              {link.label}
+            </a>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </nav>
+
+      {/* Hero Section with 3D background */}
+      <section
+        id="hero"
+        className="relative isolate min-h-[calc(100vh-76px)] grid lg:grid-cols-[1.1fr_.9fr] items-start gap-10 overflow-hidden py-20"
+      >
+        <Scene />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/20 to-background/70 pointer-events-none" />
+
+        <div className="relative z-10">
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-xs font-bold tracking-widest text-accent-dark mb-4">
+            INFORMATION SYSTEMS • IT • OPERATIONS
+          </motion.p>
+          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="font-grotesk text-5xl md:text-7xl font-bold tracking-tighter leading-[1.05]">
+            Hi, I&apos;m <span className="text-accent-dark">Cristian</span>.<br />
+            I turn organized work<br />
+            into better solutions.
+          </motion.h1>
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="mt-6 text-lg text-muted max-w-lg">
+            Information Systems Professional with hands-on experience in data encoding,
+            e-commerce support, document preparation, and office operations. I value
+            accuracy, reliability, continuous learning, and practical problem-solving.
+          </motion.p>
+
+          {/* Mini-stats */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="mt-8 flex gap-8 border-t border-black/10 dark:border-white/10 pt-6"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            {heroStats.map((s) => (
+              <div key={s.span}>
+                <strong className="font-grotesk text-2xl">{s.strong}</strong>
+                <span className="block text-xs text-muted">{s.span}</span>
+              </div>
+            ))}
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65 }} className="mt-8 flex gap-4">
+            <a href="#experience"><Button size="lg" className="rounded-full h-12 px-8">View My Experience</Button></a>
+            <a href="#contact"><Button variant="outline" size="lg" className="rounded-full h-12 px-8 bg-surface">Contact Me</Button></a>
+          </motion.div>
         </div>
-      </main>
-    </div>
+
+        <motion.div
+          style={{ y: portraitY }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4 }}
+          className="relative min-h-[540px] bg-dark rounded-[30px] overflow-hidden shadow-2xl"
+        >
+          <Image
+            src="/portrait.jpg"
+            alt="Cristian Espiritu"
+            fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 480px"
+            className="object-cover object-top"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black to-transparent z-10" />
+          <div className="absolute inset-0 z-20 flex items-end p-6 text-white">
+            <div>
+              <span className="text-xs font-bold tracking-widest uppercase bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                Open to opportunities
+              </span>
+              <h2 className="font-grotesk text-3xl mt-3">Cristian Espiritu</h2>
+              <p className="text-gray-300 text-sm">Information Systems Professional</p>
+            </div>
+          </div>
+          <div className="absolute z-20 top-6 right-6 font-mono text-xs text-accent bg-black/40 px-3 py-2 rounded-full backdrop-blur">
+            &lt;problem-solving /&gt;
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Tech marquee */}
+      <TechMarquee />
+
+      {/* Sections */}
+      <About />
+      <Skills />
+      <Experience />
+      <Education />
+      <Highlight />
+      <Contact />
+    </main>
   );
 }

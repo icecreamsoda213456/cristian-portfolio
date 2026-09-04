@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Disable the Next.js dev overlay (the "N" logo badge, issue popups and
+  // preferences panel that float over the site in dev mode).
+  devIndicators: false,
 };
 
 export default nextConfig;
