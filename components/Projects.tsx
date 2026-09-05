@@ -99,6 +99,10 @@ export default function Projects() {
                         <ExternalLink className="ml-2 size-4" />
                       </Link>
                     )
+                  ) : project.privateDemo ? (
+                    <span className="inline-flex h-10 items-center justify-center rounded-full border border-dashed border-border px-4 text-sm font-semibold text-muted">
+                      Private demo available on request
+                    </span>
                   ) : (
                     <span className="inline-flex h-10 items-center justify-center rounded-full border border-dashed border-border px-4 text-sm font-semibold text-muted">
                       Demo link needed
