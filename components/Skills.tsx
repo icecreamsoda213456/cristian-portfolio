@@ -45,6 +45,10 @@ const techSkills = [
     items: ["Microsoft Excel", "Power BI", "Tableau", "QlikView"],
   },
   {
+    group: "Automation",
+    items: ["Selenium", "n8n", "Workflow Automation", "Browser Automation"],
+  },
+  {
     group: "IT Support",
     items: [
       "PC Hardware & Software Troubleshooting",
@@ -69,10 +73,10 @@ const techSkills = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-24 bg-dark text-white">
-      <div className="max-w-[1160px] mx-auto px-6">
+    <section id="skills" className="py-20 md:py-32 bg-dark text-white">
+      <div className="max-w-[1160px] mx-auto">
         <p className="text-xs font-bold tracking-widest text-accent mb-4">02 — SKILLS</p>
-        <h2 className="font-grotesk text-5xl font-bold mb-12">What I bring to a team.</h2>
+        <h2 className="font-grotesk text-3xl md:text-5xl font-bold mb-12">What I bring to a team.</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {skills.map((skill, i) => (
             <motion.div
@@ -116,9 +120,9 @@ export default function Skills() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="grid md:grid-cols-[220px_1fr] gap-4 md:gap-8 items-start"
+                className="grid items-start gap-3 border-t border-white/10 pt-5 first:border-t-0 first:pt-0 lg:grid-cols-[220px_1fr] lg:gap-8"
               >
-                <div className="font-grotesk font-semibold text-accent tracking-wide pt-1">
+                <div className="font-grotesk font-semibold tracking-wide text-accent lg:pt-1">
                   {group.group}
                 </div>
                 <div className="flex flex-wrap gap-2">
