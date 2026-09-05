@@ -9,11 +9,11 @@ export function About() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className="py-24 bg-surface"
+      className="py-20 md:py-32 bg-surface"
     >
-      <div className="max-w-4xl mx-auto px-6">
+      <div className="max-w-4xl mx-auto">
         <p className="eyebrow text-xs font-bold tracking-widest text-accent-dark mb-4">01 — ABOUT ME</p>
-        <h2 className="font-grotesk text-5xl font-bold mb-8">Reliable, adaptable, and ready to grow.</h2>
+        <h2 className="font-grotesk text-3xl md:text-5xl font-bold mb-8">Reliable, adaptable, and ready to grow.</h2>
         <p className="text-lg text-muted leading-relaxed">
           I am an Information Systems graduate who is building my career around IT,
           business technology, and efficient digital workflows. My experience has helped

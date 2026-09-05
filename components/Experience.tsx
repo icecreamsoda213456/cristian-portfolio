@@ -24,13 +24,13 @@ const experiences = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-24">
-      <div className="max-w-[1160px] mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+    <section id="experience" className="py-20 md:py-32">
+      <div className="max-w-[1160px] mx-auto">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
           {/* Sticky left column */}
           <div className="lg:sticky lg:top-32 lg:h-fit">
             <p className="text-xs font-bold tracking-widest text-accent-dark mb-4">03 — EXPERIENCE</p>
-            <h2 className="font-grotesk text-5xl font-bold mb-6">My Professional Journey</h2>
+            <h2 className="font-grotesk text-3xl md:text-5xl font-bold mb-6">My Professional Journey</h2>
             <p className="text-muted max-w-sm">
               Scroll through the roles that shaped my career in information systems,
               data handling, and office operations.
@@ -38,7 +38,7 @@ export default function Experience() {
           </div>
 
           {/* Right column: jobs */}
-          <div className="space-y-20">
+          <div className="space-y-6 md:space-y-10">
             {experiences.map((job, i) => (
               <motion.article
                 key={job.company}
@@ -46,10 +46,10 @@ export default function Experience() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ delay: i * 0.1 }}
-                className="rounded-2xl border border-border bg-surface p-8"
+                className="rounded-2xl border border-border bg-surface p-6 md:p-8"
               >
                 <div className="text-xs font-bold tracking-widest text-accent-dark mb-1">{job.role}</div>
-                <h3 className="font-grotesk text-3xl font-bold mb-4">{job.company}</h3>
+                <h3 className="font-grotesk text-2xl md:text-3xl font-bold mb-4">{job.company}</h3>
                 <ul className="space-y-3 text-muted leading-relaxed">
                   {job.points.map((point) => (
                     <li key={point} className="flex gap-3">

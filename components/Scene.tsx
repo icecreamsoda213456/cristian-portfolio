@@ -77,13 +77,13 @@ function MobiusLoop() {
 
   return (
     <Float speed={2} rotationIntensity={0.6} floatIntensity={1.6}>
-      <mesh ref={ref} geometry={geometry} scale={1.35}>
+      <mesh ref={ref} geometry={geometry} scale={1.5}>
         <meshStandardMaterial
-          color="#e8b89e"
-          roughness={0.35}
-          metalness={0.15}
-          emissive="#d9a78f"
-          emissiveIntensity={0.6}
+          color="#f0c7b2"
+          roughness={0.28}
+          metalness={0.22}
+          emissive="#e8a98c"
+          emissiveIntensity={0.95}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -93,13 +93,13 @@ function MobiusLoop() {
 
 export default function Scene() {
   return (
-    <div className="absolute inset-0 -z-10 pointer-events-none">
-      <Canvas camera={{ position: [0, 0, 5] }}>
-        <ambientLight intensity={1.6} />
-        <hemisphereLight args={["#ffe0cc", "#3a2a22", 1.2]} />
-        <directionalLight position={[5, 5, 5]} intensity={3} />
+    <div className="pointer-events-none absolute left-[58%] top-[58%] z-0 hidden h-[500px] w-[580px] -translate-x-1/2 -translate-y-1/2 opacity-85 md:block xl:left-[56%] xl:top-[55%] xl:h-[560px] xl:w-[640px]">
+      <Canvas camera={{ position: [0, 0, 4.4], fov: 46 }} dpr={[1, 1.75]}>
+        <ambientLight intensity={2.1} />
+        <hemisphereLight args={["#ffe0cc", "#30221d", 1.8]} />
+        <directionalLight position={[5, 5, 5]} intensity={4} />
         <spotLight position={[10, 10, 10]} angle={0.3} penumbra={1} intensity={250} />
-        <pointLight position={[-4, -2, 4]} intensity={60} color="#ffffff" />
+        <pointLight position={[-4, -2, 4]} intensity={90} color="#ffffff" />
         <MobiusLoop />
         <OrbitControls enableZoom={false} enablePan={false} />
       </Canvas>

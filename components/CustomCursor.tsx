@@ -20,7 +20,7 @@ export default function CustomCursor() {
   return (
     <motion.div
       style={{ x: springX, y: springY }}
-      className="fixed top-0 left-0 w-5 h-5 rounded-full bg-accent-dark mix-blend-difference pointer-events-none z-[100]"
+      className="hidden md:block fixed top-0 left-0 w-5 h-5 rounded-full bg-accent-dark mix-blend-difference pointer-events-none z-[100]"
     />
   );
 }

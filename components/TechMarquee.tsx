@@ -16,7 +16,7 @@ const repeatedSkills = [...skills, ...skills];
 
 export default function TechMarquee() {
   return (
-    <div className="py-8 border-y border-border overflow-hidden whitespace-nowrap bg-background">
+    <div className="py-8 border-y border-border overflow-x-hidden whitespace-nowrap bg-background">
       <motion.div
         animate={{ x: "-50%" }}
         transition={{ repeat: Infinity, ease: "linear", duration: 20 }}

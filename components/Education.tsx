@@ -16,10 +16,10 @@ const education = [
 
 export default function Education() {
   return (
-    <section id="education" className="py-24 bg-surface">
-      <div className="max-w-[1160px] mx-auto px-6">
+    <section id="education" className="py-20 md:py-32 bg-surface">
+      <div className="max-w-[1160px] mx-auto">
         <p className="text-xs font-bold tracking-widest text-accent-dark mb-4">04 — EDUCATION</p>
-        <h2 className="font-grotesk text-5xl font-bold mb-12">My academic foundation.</h2>
+        <h2 className="font-grotesk text-3xl md:text-5xl font-bold mb-12">My academic foundation.</h2>
         <div className="grid md:grid-cols-2 gap-6">
           {education.map((edu, i) => (
             <motion.div
@@ -29,7 +29,7 @@ export default function Education() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
             >
-              <div className="rounded-2xl border border-border p-8 bg-background h-full">
+              <div className="rounded-2xl border border-border p-6 md:p-8 bg-background h-full">
                 <span className="text-sm font-bold text-accent-dark">{edu.years}</span>
                 <h3 className="font-grotesk text-2xl font-bold mt-2">{edu.title}</h3>
                 <p className="text-muted mt-2">{edu.school}</p>
