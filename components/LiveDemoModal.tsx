@@ -58,8 +58,7 @@ export default function LiveDemoModal({ demoUrl, title }: LiveDemoModalProps) {
           title={`${title} live demo`}
           className="min-h-0 flex-1 bg-white"
         />
-        <div className="flex items-center justify-between gap-4 border-t border-white/10 bg-zinc-950 px-4 py-3 text-xs text-zinc-400">
-          <span>Interactive demo with temporary sample data</span>
+        <div className="flex items-center justify-end gap-4 border-t border-white/10 bg-zinc-950 px-4 py-3 text-xs text-zinc-400">
           <a
             href={demoUrl}
             target="_blank"

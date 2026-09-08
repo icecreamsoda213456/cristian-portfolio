@@ -2,6 +2,7 @@ import { ArrowLeft, ExternalLink } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { projects } from "@/lib/projects"
+import LiveDemoModal from "@/components/LiveDemoModal"
 
 export default function ProjectsPage() {
   return (
@@ -80,13 +81,17 @@ export default function ProjectsPage() {
 
               <div className="flex flex-col gap-3">
                 {project.demoHref ? (
-                  <Link
-                    href={project.demoHref}
-                    className="inline-flex h-10 items-center justify-center rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground hover:bg-primary/80"
-                  >
-                    Open demo
-                    <ExternalLink className="ml-2 size-4" />
-                  </Link>
+                  project.demoHref.startsWith("http") ? (
+                    <LiveDemoModal demoUrl={project.demoHref} title={project.title} />
+                  ) : (
+                    <Link
+                      href={project.demoHref}
+                      className="inline-flex h-10 items-center justify-center rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground hover:bg-primary/80"
+                    >
+                      Open demo
+                      <ExternalLink className="ml-2 size-4" />
+                    </Link>
+                  )
                 ) : project.privateDemo ? (
                   <span className="inline-flex h-10 items-center justify-center rounded-full border border-dashed border-border px-4 text-sm font-semibold text-muted">
                     Private demo available on request
