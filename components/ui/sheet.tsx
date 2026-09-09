@@ -13,8 +13,8 @@ import { cn } from "cn"
 type SheetSide = "top" | "bottom" | "left" | "right"
 
 const sideClasses: Record<SheetSide, string> = {
-  right: "inset-y-0 right-0 h-full w-[300px] max-w-[85vw] border-l data-[starting-style]:translate-x-full data-[ending-style]:translate-x-full",
-  left: "inset-y-0 left-0 h-full w-[300px] max-w-[85vw] border-r data-[starting-style]:-translate-x-full data-[ending-style]:-translate-x-full",
+  right: "inset-y-0 right-0 h-dvh w-[300px] max-w-[85vw] border-l data-[starting-style]:translate-x-full data-[ending-style]:translate-x-full",
+  left: "inset-y-0 left-0 h-dvh w-[300px] max-w-[85vw] border-r data-[starting-style]:-translate-x-full data-[ending-style]:-translate-x-full",
   top: "inset-x-0 top-0 w-full max-h-[85vh] border-b data-[starting-style]:-translate-y-full data-[ending-style]:-translate-y-full",
   bottom:
     "inset-x-0 bottom-0 w-full max-h-[85vh] border-t data-[starting-style]:translate-y-full data-[ending-style]:translate-y-full",
@@ -48,8 +48,9 @@ function SheetContent({
       />
       <Dialog.Popup
         data-side={side}
+        data-lenis-prevent
         className={cn(
-          "fixed z-50 flex flex-col gap-4 overflow-y-auto rounded-none bg-dark p-6 text-white shadow-2xl outline-none",
+          "fixed z-50 flex flex-col gap-4 overflow-y-auto overscroll-contain rounded-none bg-dark p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-white shadow-2xl outline-none [&>*]:shrink-0",
           "border-white/10 transition-transform duration-300 ease-out will-change-transform",
           sideClasses[side],
           className,

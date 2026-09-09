@@ -60,7 +60,7 @@ export default function Home() {
     <main id="main-content" className="min-w-0 w-full overflow-x-clip">
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0d1210]/95 text-[#f3f7f1] backdrop-blur-md">
         <ScrollProgress />
-        <nav className="mx-auto flex h-[72px] max-w-[1240px] items-center justify-between px-5 sm:px-8" aria-label="Primary navigation">
+        <nav className="portfolio-nav mx-auto flex h-[72px] max-w-[1240px] items-center justify-between gap-4 px-5 sm:px-8" aria-label="Primary navigation">
           <a href="#hero" aria-label="Cristian Espiritu, home" className="font-grotesk text-lg font-bold tracking-normal sm:text-xl">
             C<span className="text-[#72ddc7]">.</span>E
           </a>
@@ -79,7 +79,7 @@ export default function Home() {
 
           <a
             href="#contact"
-            className="hidden h-10 items-center gap-2 border border-white/20 px-4 text-sm font-semibold text-white transition-colors hover:border-[#72ddc7] hover:text-[#72ddc7] sm:inline-flex"
+            className="ml-auto hidden min-h-11 shrink-0 items-center gap-2 border border-white/20 px-4 text-sm font-semibold text-white transition-colors hover:border-[#72ddc7] hover:text-[#72ddc7] sm:inline-flex lg:ml-0"
           >
             Start a conversation
             <ArrowUpRight className="size-4" />
@@ -92,7 +92,8 @@ export default function Home() {
             <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
               <SheetTrigger
                 aria-label="Open menu"
-                className="-mr-2 p-2 text-white transition-colors hover:text-[#72ddc7]"
+                title="Open menu"
+                className="grid size-11 shrink-0 place-items-center text-white transition-colors hover:text-[#72ddc7]"
               >
                 <Menu className="size-6" />
               </SheetTrigger>
@@ -132,7 +133,8 @@ export default function Home() {
       </header>
 
       <section id="hero" className="portfolio-hero relative isolate overflow-hidden bg-[#0d1210] text-[#f3f7f1]">
-        <div className="absolute inset-y-0 right-0 z-0 hidden w-[47%] overflow-hidden lg:block">
+        <Scene />
+        <div className="hero-desktop-portrait absolute inset-y-0 right-0 z-[1] hidden w-[47%] overflow-hidden lg:block [clip-path:polygon(36%_0,100%_0,100%_100%,0_100%)]">
           <Image
             src="/portrait.jpg"
             alt="Cristian Espiritu at his graduation"
@@ -142,8 +144,6 @@ export default function Home() {
             className="object-cover object-[center_25%]"
           />
         </div>
-        <div className="absolute inset-y-0 left-0 z-[1] hidden w-[70%] bg-[#0d1210] lg:block [clip-path:polygon(0_0,100%_0,76%_100%,0_100%)]" />
-        <Scene className="bottom-0 right-2 h-[230px] w-[280px] xl:right-8 xl:h-[260px] xl:w-[320px]" />
 
         <motion.div
           className="hero-content relative z-20 mx-auto flex min-h-[min(740px,calc(88svh-72px))] max-w-[1240px] flex-col justify-center px-5 py-8 sm:px-8 sm:py-12 lg:py-10"
@@ -151,25 +151,37 @@ export default function Home() {
           initial="hidden"
           animate="show"
         >
-          <motion.div variants={heroList} className="min-w-0 max-w-[720px] lg:max-w-[58%]">
-            <motion.p variants={heroLine} className="mb-4 flex items-center gap-3 text-xs font-bold tracking-widest text-[#72ddc7] sm:mb-6">
-              <span className="size-2 bg-[#72ddc7]" />
+          <motion.div variants={heroList} className="hero-intro min-w-0 max-w-[720px] lg:max-w-[58%]">
+            <motion.p variants={heroLine} className="hero-eyebrow mb-4 flex items-center gap-3 text-xs font-bold tracking-widest text-[#72ddc7] sm:mb-6">
+              <span className="size-2 shrink-0 bg-[#72ddc7]" />
               INFORMATION SYSTEMS / WEB / MOBILE
             </motion.p>
 
-            <motion.h1 variants={heroLine} className="max-w-full font-grotesk text-5xl font-bold leading-[0.97] sm:text-7xl xl:text-8xl">
-              Cristian<br /><span className="text-[#ff8666]">Espiritu.</span>
-            </motion.h1>
+            <motion.div variants={heroLine} className="hero-identity grid grid-cols-[minmax(0,1fr)_112px] items-center gap-4 sm:grid-cols-[minmax(0,1fr)_180px] lg:block">
+              <h1 className="min-w-0 max-w-full font-grotesk text-5xl font-bold leading-[0.97] sm:text-7xl xl:text-8xl">
+                Cristian<br /><span className="text-[#ff8666]">Espiritu.</span>
+              </h1>
+              <div className="hero-mobile-portrait relative aspect-[4/5] overflow-hidden lg:hidden">
+                <Image
+                  src="/portrait.jpg"
+                  alt="Cristian Espiritu at his graduation"
+                  fill
+                  loading="eager"
+                  sizes="(min-width: 1024px) 1px, (min-width: 640px) 180px, 112px"
+                  className="object-cover object-[center_25%]"
+                />
+              </div>
+            </motion.div>
 
-            <motion.p variants={heroLine} className="mt-5 max-w-lg font-grotesk text-xl font-medium leading-snug sm:text-2xl lg:text-3xl">
+            <motion.p variants={heroLine} className="hero-tagline mt-5 max-w-lg font-grotesk text-xl font-medium leading-snug sm:text-2xl lg:text-3xl">
               From everyday workflows<br className="hidden sm:block" /> to working software.
             </motion.p>
-            <motion.p variants={heroLine} className="mt-5 max-w-xl break-words text-[15px] leading-relaxed text-white/68 sm:mt-7 sm:text-lg">
+            <motion.p variants={heroLine} className="hero-description mt-5 max-w-xl break-words text-[15px] leading-relaxed text-white/68 sm:mt-7 sm:text-lg">
               Web apps, mobile experiences, and dependable business systems.
               Built with an Information Systems background and hands-on experience in operations.
             </motion.p>
 
-            <motion.div variants={heroLine} className="mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row">
+            <motion.div variants={heroLine} className="hero-actions mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row">
               <a
                 href="#projects"
                 className="inline-flex h-12 items-center justify-center gap-2 bg-[#72ddc7] px-5 text-sm font-bold text-[#0d1210] transition-colors hover:bg-[#9aead7] sm:w-auto"
@@ -203,16 +215,6 @@ export default function Home() {
             ))}
           </motion.div>
 
-          <motion.div variants={heroLine} className="hero-mobile-portrait relative mt-6 h-[150px] overflow-hidden border-y border-white/10 sm:h-[220px] lg:hidden">
-            <Image
-              src="/portrait.jpg"
-              alt="Cristian Espiritu"
-              fill
-              loading="eager"
-              sizes="(max-width: 640px) 100vw, 640px"
-              className="object-cover object-[center_20%]"
-            />
-          </motion.div>
         </motion.div>
       </section>
 
