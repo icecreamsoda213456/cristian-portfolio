@@ -1,197 +1,229 @@
-"use client";
-import { useState } from "react";
-import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Menu, MessageCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+"use client"
+
+import { useState } from "react"
+import Image from "next/image"
+import dynamic from "next/dynamic"
+import { motion } from "framer-motion"
+import { ArrowDown, ArrowUpRight, Mail, Menu, X } from "lucide-react"
 import {
   Sheet,
   SheetContent,
-  SheetTrigger,
+  SheetClose,
   SheetTitle,
-} from "@/components/ui/sheet";
-import Scene from "@/components/Scene";
-import { About } from "@/components/About";
-import Projects from "@/components/Projects";
-import Skills from "@/components/Skills";
-import Experience from "@/components/Experience";
-import Education from "@/components/Education";
-import Highlight from "@/components/Highlight";
-import Contact from "@/components/Contact";
-import TechMarquee from "@/components/TechMarquee";
-import ScrollProgress from "@/components/ScrollProgress";
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { About } from "@/components/About"
+import Projects from "@/components/Projects"
+import Skills from "@/components/Skills"
+import Experience from "@/components/Experience"
+import Education from "@/components/Education"
+import Highlight from "@/components/Highlight"
+import Contact from "@/components/Contact"
+import TechMarquee from "@/components/TechMarquee"
+import ScrollProgress from "@/components/ScrollProgress"
+
+const Scene = dynamic(() => import("@/components/Scene"), { ssr: false })
 
 const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
+  { href: "#projects", label: "Work" },
+  { href: "#about", label: "Profile" },
+  { href: "#skills", label: "Capabilities" },
   { href: "#experience", label: "Experience" },
-  { href: "#education", label: "Education" },
   { href: "#contact", label: "Contact" },
-];
+]
 
-const heroStats = [
-  { strong: "1+", span: "Years Working" },
-  { strong: "3+", span: "Projects Built" },
-  { strong: "100%", span: "Commitment" },
-];
+const proofPoints = [
+  { value: "02", label: "featured builds" },
+  { value: "40+", label: "tools and platforms" },
+  { value: "2024", label: "BSIS graduate" },
+]
+
+const heroLine = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+} as const
+
+const heroList = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09 } },
+} as const
+
+const heroStagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+} as const
 
 export default function Home() {
-  // Global scroll progress — no target ref, so the framer-motion
-  // "Target ref is defined but not hydrated" error can never occur.
-  const { scrollYProgress } = useScroll();
-  const portraitY = useTransform(scrollYProgress, [0, 0.2], [24, -24]);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <main className="mx-auto min-w-0 w-full max-w-[1160px] overflow-x-clip px-5 md:px-6">
-      {/* Navbar */}
-      <nav className="sticky top-0 h-[76px] flex items-center justify-between bg-background/90 backdrop-blur-md border-b border-black/10 dark:border-white/10 z-50">
+    <main id="main-content" className="min-w-0 w-full overflow-x-clip">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0d1210]/95 text-[#f3f7f1] backdrop-blur-md">
         <ScrollProgress />
-        <a href="#hero" className="font-grotesk text-lg font-bold sm:text-2xl">
-          Cristian Espiritu<span className="text-accent-dark">.</span>
-        </a>
-        <div className="hidden md:flex gap-8 text-sm font-semibold text-muted">
-          {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="hover:text-accent-dark">
-              {link.label}
-            </a>
-          ))}
-        </div>
-        {/* Mobile menu — slide-out sheet */}
-        <div className="md:hidden">
-          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-            <SheetTrigger
-              aria-label="Open menu"
-              className="p-2 -mr-2 rounded-md hover:bg-muted active:bg-muted"
-            >
-              <Menu className="size-6" />
-            </SheetTrigger>
-            <SheetContent side="right">
-              <SheetTitle className="text-accent font-bold text-2xl">
-                CE.
-              </SheetTitle>
-              <nav className="flex flex-col gap-6 mt-10 font-grotesk text-2xl">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="hover:text-accent"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </nav>
-              <div className="mt-auto pt-6">
-                <a href="#contact" onClick={() => setMenuOpen(false)} className="block">
-                  <Button size="lg" className="w-full rounded-full h-12">
-                    Let&apos;s Connect
-                  </Button>
-                </a>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-      </nav>
+        <nav className="mx-auto flex h-[72px] max-w-[1240px] items-center justify-between px-5 sm:px-8" aria-label="Primary navigation">
+          <a href="#hero" aria-label="Cristian Espiritu, home" className="font-grotesk text-lg font-bold tracking-normal sm:text-xl">
+            C<span className="text-[#72ddc7]">.</span>E
+          </a>
 
-      {/* Hero Section with 3D background */}
-      <section
-        id="hero"
-        className="relative isolate grid min-w-0 min-h-[calc(100vh-76px)] grid-cols-1 items-center gap-10 overflow-hidden py-12 md:py-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,.95fr)] lg:py-20 xl:gap-14"
-      >
-        <Scene />
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-background/45 via-background/5 to-background/60" />
+          <div className="hidden items-center gap-7 lg:flex">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-semibold text-white/65 transition-colors hover:text-white"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
 
-        <div className="relative z-10 min-w-0 max-w-2xl">
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-xs font-bold tracking-widest text-accent-dark mb-4">
-            INFORMATION SYSTEMS • IT • OPERATIONS
-          </motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="break-words font-grotesk text-3xl font-bold leading-[1.08] sm:text-5xl md:text-6xl xl:text-7xl">
-            Hi, I&apos;m <span className="text-accent-dark">Cristian</span>.<br />
-            I turn organized work<br />
-            into better solutions.
-          </motion.h1>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="mt-6 min-w-0 max-w-lg text-base text-muted sm:text-lg">
-            Information Systems Professional with hands-on experience in data encoding,
-            e-commerce support, document preparation, and office operations. I value
-            accuracy, reliability, continuous learning, and practical problem-solving.
-          </motion.p>
-
-          {/* Mini-stats */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="mt-8 flex flex-wrap gap-x-8 gap-y-4 border-t border-black/10 pt-6 dark:border-white/10"
+          <a
+            href="#contact"
+            className="hidden h-10 items-center gap-2 border border-white/20 px-4 text-sm font-semibold text-white transition-colors hover:border-[#72ddc7] hover:text-[#72ddc7] sm:inline-flex"
           >
-            {heroStats.map((s) => (
-              <div key={s.span}>
-                <strong className="font-grotesk text-2xl">{s.strong}</strong>
-                <span className="block text-xs text-muted">{s.span}</span>
+            Start a conversation
+            <ArrowUpRight className="size-4" />
+          </a>
+
+          <div className="flex items-center gap-3 lg:hidden">
+            <a href="#contact" aria-label="Contact Cristian" title="Contact Cristian" className="grid size-11 place-items-center text-[#72ddc7] sm:hidden">
+              <Mail className="size-5" />
+            </a>
+            <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+              <SheetTrigger
+                aria-label="Open menu"
+                className="-mr-2 p-2 text-white transition-colors hover:text-[#72ddc7]"
+              >
+                <Menu className="size-6" />
+              </SheetTrigger>
+              <SheetContent side="right" className="bg-[#101613] text-[#f3f7f1]">
+                <div className="flex items-center justify-between">
+                  <SheetTitle className="font-grotesk text-xl font-bold text-[#f3f7f1]">
+                    C<span className="text-[#72ddc7]">.</span>E
+                  </SheetTitle>
+                  <SheetClose aria-label="Close menu" title="Close menu" className="grid size-11 place-items-center hover:text-[#72ddc7]">
+                    <X className="size-5" />
+                  </SheetClose>
+                </div>
+                <nav className="mt-6 flex flex-col gap-4 font-grotesk text-2xl" aria-label="Mobile navigation">
+                  {navLinks.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="border-b border-white/10 pb-4 transition-colors hover:text-[#72ddc7]"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </nav>
+                <a
+                  href="mailto:cristianespiritu23@gmail.com"
+                  onClick={() => setMenuOpen(false)}
+                  className="mt-12 inline-flex items-center gap-2 border border-[#72ddc7] px-4 py-3 text-sm font-semibold text-[#72ddc7]"
+                >
+                  Email Cristian
+                  <Mail className="size-4" />
+                </a>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </nav>
+      </header>
+
+      <section id="hero" className="portfolio-hero relative isolate overflow-hidden bg-[#0d1210] text-[#f3f7f1]">
+        <div className="absolute inset-y-0 right-0 z-0 hidden w-[47%] overflow-hidden lg:block">
+          <Image
+            src="/portrait.jpg"
+            alt="Cristian Espiritu at his graduation"
+            fill
+            loading="eager"
+            sizes="47vw"
+            className="object-cover object-[center_25%]"
+          />
+        </div>
+        <div className="absolute inset-y-0 left-0 z-[1] hidden w-[70%] bg-[#0d1210] lg:block [clip-path:polygon(0_0,100%_0,76%_100%,0_100%)]" />
+        <Scene className="bottom-0 right-2 h-[230px] w-[280px] xl:right-8 xl:h-[260px] xl:w-[320px]" />
+
+        <motion.div
+          className="hero-content relative z-20 mx-auto flex min-h-[min(740px,calc(88svh-72px))] max-w-[1240px] flex-col justify-center px-5 py-8 sm:px-8 sm:py-12 lg:py-10"
+          variants={heroStagger}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.div variants={heroList} className="min-w-0 max-w-[720px] lg:max-w-[58%]">
+            <motion.p variants={heroLine} className="mb-4 flex items-center gap-3 text-xs font-bold tracking-widest text-[#72ddc7] sm:mb-6">
+              <span className="size-2 bg-[#72ddc7]" />
+              INFORMATION SYSTEMS / WEB / MOBILE
+            </motion.p>
+
+            <motion.h1 variants={heroLine} className="max-w-full font-grotesk text-5xl font-bold leading-[0.97] sm:text-7xl xl:text-8xl">
+              Cristian<br /><span className="text-[#ff8666]">Espiritu.</span>
+            </motion.h1>
+
+            <motion.p variants={heroLine} className="mt-5 max-w-lg font-grotesk text-xl font-medium leading-snug sm:text-2xl lg:text-3xl">
+              From everyday workflows<br className="hidden sm:block" /> to working software.
+            </motion.p>
+            <motion.p variants={heroLine} className="mt-5 max-w-xl break-words text-[15px] leading-relaxed text-white/68 sm:mt-7 sm:text-lg">
+              Web apps, mobile experiences, and dependable business systems.
+              Built with an Information Systems background and hands-on experience in operations.
+            </motion.p>
+
+            <motion.div variants={heroLine} className="mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row">
+              <a
+                href="#projects"
+                className="inline-flex h-12 items-center justify-center gap-2 bg-[#72ddc7] px-5 text-sm font-bold text-[#0d1210] transition-colors hover:bg-[#9aead7] sm:w-auto"
+              >
+                View selected work
+                <motion.span
+                  aria-hidden="true"
+                  animate={{ y: [0, 5, 0] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                  className="inline-flex"
+                >
+                  <ArrowDown className="size-4" />
+                </motion.span>
+              </a>
+              <a
+                href="#contact"
+                className="hidden h-12 items-center justify-center gap-2 border border-white/25 px-5 text-sm font-bold text-white transition-colors hover:border-[#ff8666] hover:text-[#ffad97] sm:inline-flex sm:w-auto"
+              >
+                Get in touch
+                <ArrowUpRight className="size-4" />
+              </a>
+            </motion.div>
+          </motion.div>
+
+          <motion.div variants={heroLine} className="hero-proof mt-8 grid min-w-0 max-w-2xl grid-cols-3 border-t border-white/15 pt-4 sm:mt-10 sm:pt-5 lg:max-w-[56%]">
+            {proofPoints.map((item) => (
+              <div key={item.label} className="min-w-0 border-l border-white/15 px-2 first:border-l-0 first:pl-0 sm:px-3">
+                <p className="font-grotesk text-2xl font-bold text-white sm:text-3xl">{item.value}</p>
+                <p className="mt-1 text-[10px] font-semibold tracking-wide text-white/55 sm:text-xs">{item.label}</p>
               </div>
             ))}
           </motion.div>
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65 }} className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
-            <a href="#experience" className="w-full sm:w-auto"><Button size="lg" className="h-12 w-full rounded-full px-8 sm:w-auto">View My Experience</Button></a>
-            <a href="#contact" className="w-full sm:w-auto"><Button variant="outline" size="lg" className="h-12 w-full rounded-full bg-surface px-8 sm:w-auto">Contact Me</Button></a>
+          <motion.div variants={heroLine} className="hero-mobile-portrait relative mt-6 h-[150px] overflow-hidden border-y border-white/10 sm:h-[220px] lg:hidden">
+            <Image
+              src="/portrait.jpg"
+              alt="Cristian Espiritu"
+              fill
+              loading="eager"
+              sizes="(max-width: 640px) 100vw, 640px"
+              className="object-cover object-[center_20%]"
+            />
           </motion.div>
-        </div>
-
-        <motion.div
-          style={{ y: portraitY }}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4 }}
-          className="relative z-10 min-h-[420px] min-w-0 w-full overflow-hidden rounded-[28px] bg-dark shadow-2xl sm:aspect-[4/5] sm:min-h-0 lg:aspect-auto lg:h-[min(620px,calc(100vh-140px))] lg:min-h-[520px]"
-        >
-          <Image
-            src="/portrait.jpg"
-            alt="Cristian Espiritu"
-            fill
-            priority
-            sizes="(max-width: 1024px) 100vw, 480px"
-            className="object-cover object-top"
-          />
-          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black to-transparent z-10" />
-          <div className="absolute inset-0 z-20 flex items-end p-6 text-white">
-            <div>
-              <span className="text-xs font-bold tracking-widest uppercase bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
-                Open to opportunities
-              </span>
-              <h2 className="font-grotesk text-3xl mt-3">Cristian Espiritu</h2>
-              <p className="text-gray-300 text-sm">Information Systems Professional</p>
-            </div>
-          </div>
-          <div className="absolute z-20 top-6 right-6 font-mono text-xs text-accent bg-black/40 px-3 py-2 rounded-full backdrop-blur">
-            &lt;problem-solving /&gt;
-          </div>
         </motion.div>
       </section>
 
-      {/* Floating mobile CTA — always-visible contact shortcut */}
-      <div className="fixed bottom-5 right-5 z-40 md:hidden">
-        <a
-          href="#contact"
-          aria-label="Message me"
-          className="flex w-14 h-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-2xl active:scale-95 transition-transform"
-        >
-          <MessageCircle className="size-6" />
-        </a>
-      </div>
-
-      {/* Tech marquee */}
       <TechMarquee />
-
-      {/* Sections */}
+      <Projects />
       <About />
       <Skills />
-      <Projects />
       <Experience />
       <Education />
       <Highlight />
       <Contact />
     </main>
-  );
+  )
 }

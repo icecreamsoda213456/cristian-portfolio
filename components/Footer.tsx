@@ -1,13 +1,12 @@
-"use client"
-
 export default function Footer() {
   return (
-    <footer className="py-10 px-5 md:px-6 border-t border-border bg-background">
-      <div className="max-w-[1160px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted">
-        <span>
-          © <span className="font-semibold">2026</span> Cristian Espiritu
+    <footer className="border-t border-white/10 bg-[#0d1210] text-[#f3f7f1]">
+      <div className="mx-auto flex max-w-[1240px] flex-col gap-3 px-5 py-7 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <span className="font-grotesk font-bold">
+          C<span className="text-[#72ddc7]">.</span>E
         </span>
-        <span>Built with Next.js, React Three Fiber &amp; Tailwind CSS.</span>
+        <span className="text-white/45">Copyright 2026 Cristian Espiritu</span>
+        <span className="text-white/45">Systems, software, and operations.</span>
       </div>
     </footer>
   )

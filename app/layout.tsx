@@ -1,40 +1,40 @@
-import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
-import "./globals.css";
-import SmoothScroll from "@/components/SmoothScroll";
-import CustomCursor from "@/components/CustomCursor";
-import CommandPalette from "@/components/CommandPalette";
-import { ThemeProvider } from "@/components/theme-provider";
-import Footer from "@/components/Footer";
+import type { Metadata } from "next"
+import { Inter, Space_Grotesk } from "next/font/google"
+import "./globals.css"
+import SmoothScroll from "@/components/SmoothScroll"
+import CustomCursor from "@/components/CustomCursor"
+import CommandPalette from "@/components/CommandPalette"
+import { ThemeProvider } from "@/components/theme-provider"
+import Footer from "@/components/Footer"
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-});
+})
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
-});
+})
 
 export const metadata: Metadata = {
-  title: "Cristian Espiritu | Information Systems Portfolio",
+  title: "Cristian Espiritu | Systems and Operations",
   description:
-    "Cristian Espiritu — Information Systems professional portfolio. Aspiring Information Systems professional with experience in data encoding, e-commerce support, document preparation, and office operations.",
-};
+    "Portfolio of Cristian Espiritu, an Information Systems graduate building practical digital products, dependable workflows, and useful operations support.",
+}
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   return (
     <html
       lang="en"
       suppressHydrationWarning
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">
+      <body className="flex min-h-full flex-col font-sans">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <SmoothScroll>
             <CustomCursor />
@@ -45,5 +45,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

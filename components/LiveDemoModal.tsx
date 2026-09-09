@@ -19,7 +19,7 @@ export default function LiveDemoModal({ demoUrl, title }: LiveDemoModalProps) {
   return (
     <Dialog>
       <DialogTrigger
-        render={<Button className="h-10 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground hover:bg-primary/80" />}
+        render={<Button className="h-11 rounded-md bg-[#132019] px-4 text-sm font-semibold text-white hover:bg-[#bd4936]" />}
       >
         <MonitorPlay className="size-4" />
         Try live demo

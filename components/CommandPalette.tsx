@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useSyncExternalStore } from "react";
 import { Command } from "cmdk";
+import { useRouter } from "next/navigation";
 import {
   getCommandPaletteOpen,
   setCommandPaletteOpen,
@@ -8,14 +9,16 @@ import {
 } from "@/lib/command-palette";
 
 const sections = [
-  { id: "about", label: "About" },
-  { id: "skills", label: "Skills" },
+  { id: "projects", label: "Selected Work" },
+  { id: "about", label: "Profile" },
+  { id: "skills", label: "Capabilities" },
   { id: "experience", label: "Experience" },
   { id: "education", label: "Education" },
   { id: "contact", label: "Contact" },
 ];
 
 export default function CommandPalette() {
+  const router = useRouter();
   const open = useSyncExternalStore(
     subscribeCommandPalette,
     getCommandPaletteOpen,
@@ -24,6 +27,7 @@ export default function CommandPalette() {
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setCommandPaletteOpen(false);
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         setCommandPaletteOpen(!getCommandPaletteOpen());
@@ -37,15 +41,17 @@ export default function CommandPalette() {
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 z-[99] flex justify-center pt-20 p-4"
+      className="fixed inset-0 bg-black/50 z-[99] flex items-start justify-center p-4 pt-20"
       onClick={() => setCommandPaletteOpen(false)}
     >
       <div
-        className="w-full max-w-lg rounded-xl shadow-2xl p-2 bg-popover text-popover-foreground ring-1 ring-border"
+        className="w-full max-w-lg rounded-lg shadow-2xl p-2 bg-popover text-popover-foreground ring-1 ring-border"
         onClick={(e) => e.stopPropagation()}
       >
         <Command>
           <Command.Input
+            autoFocus
+            aria-label="Search portfolio sections"
             placeholder="Search or jump to..."
             className="w-full p-3 outline-none border-b border-border bg-transparent"
           />
@@ -57,7 +63,7 @@ export default function CommandPalette() {
                   key={s.id}
                   className="p-3 hover:bg-muted cursor-pointer rounded-md"
                   onSelect={() => {
-                    window.location.hash = `#${s.id}`;
+                    router.push(`/#${s.id}`);
                     setCommandPaletteOpen(false);
                   }}
                 >

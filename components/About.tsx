@@ -1,37 +1,58 @@
 "use client"
+
 import { motion } from "framer-motion"
+
+const strengths = [
+  ["Clear thinking", "I turn messy tasks into steps people can follow."],
+  ["Care with detail", "Accurate records and complete information matter to me."],
+  ["Momentum", "I learn quickly and keep work moving without losing quality."],
+]
+
+const aboutGroup = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12 } },
+} as const
+
+const aboutItem = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+} as const
 
 export function About() {
   return (
-    <motion.section
-      id="about"
-      initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
-      className="py-20 md:py-32 bg-surface"
-    >
-      <div className="max-w-4xl mx-auto">
-        <p className="eyebrow text-xs font-bold tracking-widest text-accent-dark mb-4">01 — ABOUT ME</p>
-        <h2 className="font-grotesk text-3xl md:text-5xl font-bold mb-8">Reliable, adaptable, and ready to grow.</h2>
-        <p className="text-lg text-muted leading-relaxed">
-          I am an Information Systems graduate who is building my career around IT,
-          business technology, and efficient digital workflows. My experience has helped
-          me develop strong attention to detail, organization, communication, and time
-          management.
-        </p>
-        <p className="text-lg text-muted leading-relaxed mt-4">
-          I enjoy learning new tools, supporting day-to-day operations, and finding
-          practical ways technology can make work more accurate and efficient.
-        </p>
-        <div className="qualities flex flex-wrap gap-3 mt-8">
-          {["Detail-oriented", "Quick learner", "Team player", "Reliable", "Adaptable", "Deadline-focused"].map((q) => (
-            <span key={q} className="px-4 py-2 rounded-full bg-secondary text-sm font-semibold text-secondary-foreground">
-              ✓ {q}
-            </span>
-          ))}
-        </div>
-      </div>
-    </motion.section>
+    <section id="about" className="border-b border-border bg-background py-20 md:py-28">
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={aboutGroup}
+        className="mx-auto grid max-w-[1240px] gap-12 px-5 sm:px-8 lg:grid-cols-[0.85fr_1.35fr] lg:gap-20"
+      >
+        <motion.div variants={aboutItem}>
+          <p className="text-xs font-bold tracking-widest text-accent-dark">02 / PROFILE</p>
+          <h2 className="mt-5 font-grotesk text-4xl font-bold leading-[1.02] tracking-normal md:text-6xl">
+            Dependable where it counts.
+          </h2>
+        </motion.div>
+
+        <motion.div variants={aboutItem}>
+          <p className="max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
+            I am an Information Systems graduate building a career around business technology,
+            practical IT support, and efficient digital workflows. I bring the patience to
+            understand the work first, then improve it with the right tools.
+          </p>
+
+          <div className="mt-12 border-t border-border">
+            {strengths.map(([title, detail], index) => (
+              <div key={title} className="grid gap-3 border-b border-border py-5 sm:grid-cols-[90px_180px_1fr] sm:items-baseline">
+                <span className="font-grotesk text-sm font-bold text-accent-dark">0{index + 1}</span>
+                <h3 className="font-grotesk text-lg font-bold">{title}</h3>
+                <p className="text-sm leading-relaxed text-muted">{detail}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </motion.div>
+    </section>
   )
 }

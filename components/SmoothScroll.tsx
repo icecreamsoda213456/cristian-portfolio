@@ -1,19 +1,24 @@
 "use client";
 import { ReactNode, useEffect } from "react";
 import Lenis from "lenis";
+import { MotionConfig } from "framer-motion";
 
 export default function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Skip Lenis on touch devices — native momentum scrolling feels better
     // and avoids jank on mobile.
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-    const lenis = new Lenis();
+    if (window.matchMedia("(pointer: coarse), (prefers-reduced-motion: reduce)").matches) return;
+    const lenis = new Lenis({ anchors: true });
+    let frameId: number;
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      frameId = requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
+    frameId = requestAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(frameId);
+      lenis.destroy();
+    };
   }, []);
-  return <>{children}</>;
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
 }

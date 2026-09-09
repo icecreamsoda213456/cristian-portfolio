@@ -1,40 +1,62 @@
 "use client"
+
 import { motion } from "framer-motion"
+
+const revealGroup = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+} as const
+
+const revealItem = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+} as const
 
 const education = [
   {
-    years: "2020 — 2024",
+    years: "2020 - 2024",
     title: "Bachelor of Science in Information Systems",
     school: "Richwell Colleges, Incorporated",
   },
   {
-    years: "2017 — 2018",
-    title: "Information and Communications Technology (ICT)",
+    years: "2017 - 2018",
+    title: "Information and Communications Technology",
     school: "ACLC College of Malolos",
   },
 ]
 
 export default function Education() {
   return (
-    <section id="education" className="py-20 md:py-32 bg-surface">
-      <div className="max-w-[1160px] mx-auto">
-        <p className="text-xs font-bold tracking-widest text-accent-dark mb-4">04 — EDUCATION</p>
-        <h2 className="font-grotesk text-3xl md:text-5xl font-bold mb-12">My academic foundation.</h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          {education.map((edu, i) => (
-            <motion.div
-              key={edu.title}
+    <section id="education" className="bg-[#e7f0eb] py-20 text-[#132019] md:py-28">
+      <div className="mx-auto grid max-w-[1240px] gap-12 px-5 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={revealGroup}
+        >
+          <motion.p variants={revealItem} className="text-xs font-bold tracking-widest text-[#bd4936]">05 / EDUCATION</motion.p>
+          <motion.h2 variants={revealItem} className="mt-5 font-grotesk text-4xl font-bold leading-[1.02] tracking-normal md:text-6xl">
+            A grounded technical start.
+          </motion.h2>
+        </motion.div>
+
+        <div className="border-t border-[#132019]/15">
+          {education.map((item, index) => (
+            <motion.article
+              key={item.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: index * 0.08 }}
+              className="grid gap-3 border-b border-[#132019]/15 py-7 sm:grid-cols-[130px_1fr]"
             >
-              <div className="rounded-2xl border border-border p-6 md:p-8 bg-background h-full">
-                <span className="text-sm font-bold text-accent-dark">{edu.years}</span>
-                <h3 className="font-grotesk text-2xl font-bold mt-2">{edu.title}</h3>
-                <p className="text-muted mt-2">{edu.school}</p>
+              <p className="text-sm font-bold text-[#bd4936]">{item.years}</p>
+              <div>
+                <h3 className="font-grotesk text-xl font-bold md:text-2xl">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#132019]/65">{item.school}</p>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>

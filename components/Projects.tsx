@@ -1,119 +1,121 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Image from "next/image"
-import { Boxes, ExternalLink, FolderKanban, ShoppingCart } from "lucide-react"
 import Link from "next/link"
-import { projects } from "@/lib/projects"
+import { motion } from "framer-motion"
+import { ArrowUpRight, ExternalLink } from "lucide-react"
 import LiveDemoModal from "@/components/LiveDemoModal"
+import { projects } from "@/lib/projects"
 
-const icons = [Boxes, ShoppingCart, FolderKanban]
+const pjGroup = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+} as const
+
+const pjItem = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+} as const
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-20 md:py-32 bg-surface">
-      <div className="max-w-[1160px] mx-auto">
-        <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-xs font-bold tracking-widest text-accent-dark mb-4">
-              03 — PROJECTS
+    <section id="projects" className="bg-[#f2f6f2] py-20 text-[#132019] md:py-28">
+      <div className="mx-auto max-w-[1240px] px-5 sm:px-8">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={pjGroup}
+          className="grid gap-8 border-b border-[#132019]/15 pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end"
+        >
+          <motion.div variants={pjItem}>
+            <p className="text-xs font-bold tracking-widest text-[#bd4936]">01 / SELECTED WORK</p>
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#132019]/65">
+              A few projects that show how I think through products, data, and real user needs.
             </p>
-            <h2 className="font-grotesk text-3xl md:text-5xl font-bold">
-              Demos and sample work.
+          </motion.div>
+          <motion.div variants={pjItem} className="lg:justify-self-end lg:text-right">
+            <h2 className="max-w-3xl font-grotesk text-4xl font-bold leading-[1.02] tracking-normal md:text-6xl">
+              Useful systems, made tangible.
             </h2>
-          </div>
-          <Link
-            href="/projects"
-            className="inline-flex h-11 w-fit items-center justify-center rounded-full border border-border bg-background px-5 text-sm font-semibold hover:bg-secondary"
-          >
-            View all projects
-            <ExternalLink className="ml-2 size-4" />
-          </Link>
-        </div>
+            <Link
+              href="/projects"
+              className="mt-6 inline-flex items-center gap-2 border-b border-[#132019] pb-1 text-sm font-bold transition-colors hover:border-[#bd4936] hover:text-[#bd4936]"
+            >
+              Explore all project details
+              <ArrowUpRight className="size-4" />
+            </Link>
+          </motion.div>
+        </motion.div>
 
-        <div className="grid gap-5 md:grid-cols-3">
-          {projects.map((project, index) => {
-            const Icon = icons[index] ?? FolderKanban
-
-            return (
-              <motion.article
-                key={project.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08 }}
-                whileHover={{ y: -8 }}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-sm"
-              >
+        <div className="divide-y divide-[#132019]/15">
+          {projects.map((project, index) => (
+            <motion.article
+              key={project.title}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
+              className={`group grid gap-7 py-10 md:py-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(300px,0.9fr)] lg:gap-12 ${index % 2 === 1 ? "lg:[&>figure]:order-2" : ""}`}
+            >
+              <figure className="min-w-0 self-start">
+                <div className="relative aspect-[36/25] overflow-hidden border border-[#132019]/15 bg-[#dfeae6]">
                 {project.imageSrc && (
-                  <div className="relative h-52 overflow-hidden bg-dark">
-                    <Image
-                      src={project.imageSrc}
-                      alt={`${project.title} preview`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
+                  <Image
+                    src={project.imageSrc}
+                    alt={`${project.title} preview`}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                    className="object-contain transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  />
                 )}
+                </div>
+                <figcaption className="border-b border-[#132019]/15 py-3 text-xs font-bold text-[#132019]/65">
+                  {String(index + 1).padStart(2, "0")} / {project.type.toUpperCase()}
+                </figcaption>
+              </figure>
 
-                <div className="flex flex-1 flex-col p-6">
-                <div className="mb-5 flex items-start justify-between gap-4">
-                  <div className="flex size-11 items-center justify-center rounded-xl bg-secondary text-accent-dark">
-                    <Icon className="size-5" />
+              <div className="flex flex-col justify-between py-1">
+                <div>
+                  <p className="text-sm font-bold text-[#bd4936]">{project.type}</p>
+                  <h3 className="mt-3 font-grotesk text-3xl font-bold leading-tight md:text-4xl">
+                    {project.title}
+                  </h3>
+                  <p className="mt-5 leading-relaxed text-[#132019]/72">{project.description}</p>
+                  <p className="mt-4 border-l-2 border-[#72bca9] pl-4 text-sm leading-relaxed text-[#132019]/82">
+                    {project.impact}
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {project.tech.map((tech) => (
+                      <span key={tech} className="border border-[#132019]/20 px-2.5 py-1 text-xs font-semibold text-[#132019]/70">
+                        {tech}
+                      </span>
+                    ))}
                   </div>
-                  <span className="rounded-full bg-accent/15 px-3 py-1 text-xs font-bold text-accent-dark">
-                    {project.type}
-                  </span>
                 </div>
 
-                <h3 className="font-grotesk text-2xl font-bold">{project.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
-                  {project.description}
-                </p>
-                <p className="mt-4 text-sm leading-relaxed text-foreground/80">
-                  {project.impact}
-                </p>
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold text-muted"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-auto flex flex-wrap gap-3 pt-8">
+                <div className="mt-8 flex flex-wrap gap-3">
                   {project.demoHref ? (
                     project.demoHref.startsWith("http") ? (
                       <LiveDemoModal demoUrl={project.demoHref} title={project.title} />
                     ) : (
                       <Link
                         href={project.demoHref}
-                        className="inline-flex h-10 items-center justify-center rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground hover:bg-primary/80"
+                        className="inline-flex h-11 items-center gap-2 bg-[#132019] px-4 text-sm font-bold text-white transition-colors hover:bg-[#bd4936]"
                       >
-                        Live demo
-                        <ExternalLink className="ml-2 size-4" />
+                        Open project
+                        <ExternalLink className="size-4" />
                       </Link>
                     )
                   ) : project.privateDemo ? (
-                    <span className="inline-flex h-10 items-center justify-center rounded-full border border-dashed border-border px-4 text-sm font-semibold text-muted">
+                    <span className="inline-flex h-11 items-center border border-dashed border-[#132019]/30 px-4 text-sm font-bold text-[#132019]/65">
                       Private demo available on request
                     </span>
-                  ) : (
-                    <span className="inline-flex h-10 items-center justify-center rounded-full border border-dashed border-border px-4 text-sm font-semibold text-muted">
-                      Demo link needed
-                    </span>
-                  )}
-
+                  ) : null}
                 </div>
-                </div>
-              </motion.article>
-            )
-          })}
+              </div>
+            </motion.article>
+          ))}
         </div>
       </div>
     </section>
